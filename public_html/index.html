@@ -1,0 +1,172 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0e1a2c">
+<title>JOMO Portfolio</title>
+<style>
+:root{
+  --bg:#0e1a2c; --bg-2:#152238; --card:#1c2f4d; --card-2:#243a5e;
+  --fg:#ffffff; --fg-soft:rgba(255,255,255,.72); --fg-faint:rgba(255,255,255,.5);
+  --line:rgba(255,255,255,.12); --gold:#d8ad5f; --gold-hi:#e8c988; --gold-lo:#c99a45;
+  --gold-line:rgba(216,173,95,.35); --on-gold:#152238;
+  --shadow:0 12px 30px rgba(9,15,28,.35); --nav-bg:rgba(14,26,44,.86);
+  --logo:url(assets/logo.png);
+  --radius:14px;
+}
+:root{color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent;overscroll-behavior-y:none;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.55;padding-inline:16px}
+.wrap{max-width:1180px;margin-inline:auto}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:inherit}
+h1,h2,h3{text-wrap:balance;margin:0;line-height:1.15}
+.eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:600}
+
+/* top bar */
+.top{background:var(--bg);margin-inline:-16px;padding:14px 16px;border-bottom:1px solid var(--gold-line)}
+.logo{display:block;width:190px;aspect-ratio:560/214;background:var(--logo) center/contain no-repeat;border:0;padding:0;cursor:pointer}
+
+/* home */
+.hero{padding-block:36px 28px;display:grid;gap:14px;max-width:760px}
+.hero h1{font-size:clamp(32px,6vw,54px);font-weight:700;letter-spacing:-.01em}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero p{margin:0;color:var(--fg-soft);font-size:17px;max-width:56ch}
+.ccard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;text-align:left;padding:0;display:flex;flex-direction:column;box-shadow:var(--shadow);transition:transform .2s,border-color .2s}
+.ccard:hover,.ccard:focus-visible{transform:translateY(-3px);border-color:var(--gold-line);outline:none}
+.ccard .cover{aspect-ratio:4/3;width:100%;display:block;object-fit:cover}
+.ccard .body{padding:14px 16px 16px;display:grid;gap:4px}
+.ccard h3{font-size:19px}
+
+/* client page */
+.back{background:none;border:0;padding:8px 0;color:var(--fg-soft);font-size:14px;display:inline-flex;gap:6px}
+.back:hover{color:var(--gold)}
+.chead{padding-block:10px 18px}
+.chead h1{font-size:clamp(26px,4.5vw,40px);font-weight:700;color:var(--gold)}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;padding-bottom:48px}
+.gal button{padding:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card);aspect-ratio:4/3}
+.gal img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s}
+.gal button:hover img{transform:scale(1.03)}
+
+/* lightbox */
+.lb{position:fixed;inset:0;height:100dvh;touch-action:pan-y pinch-zoom;overscroll-behavior:contain;z-index:50;background:rgba(6,11,20,.94);display:grid;grid-template-rows:auto 1fr auto;padding:env(safe-area-inset-top,0px) 12px env(safe-area-inset-bottom,0px)}
+.lb[hidden]{display:none}
+.lb .bar{display:flex;justify-content:space-between;align-items:center;padding:12px 4px;color:#fff;font-size:14px}
+.lb .stage{display:grid;place-items:center;min-height:0;position:relative}
+.lb .stage img{user-select:none;-webkit-user-drag:none;width:auto;height:auto;max-width:100%;max-height:100%;border-radius:10px;object-fit:contain}
+.lb button.x,.lb button.nv{background:rgba(255,255,255,.12);border:0;color:#fff;border-radius:999px;width:42px;height:42px;font-size:20px}
+.lb .nv{position:absolute;top:50%;translate:0 -50%}
+.lb .prev{left:0}.lb .next{right:0}
+.lb .cap2{color:#fff;text-align:center;padding:12px;font-size:14px}
+@media (max-width:520px){.logo{width:150px}}
+@media (hover:none){.ccard:hover,.ccard:focus-visible{transform:none}.gal button:hover img{transform:none}}
+.back,.lb button{min-height:44px}
+.back{padding-inline:0 12px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+
+/* sizing + mobile */
+.grid{display:grid;margin-top:28px;padding-bottom:64px;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:18px}
+.ccard .cover{aspect-ratio:1/1;height:auto}
+.ccard .body{padding:12px 14px 14px}
+.ccard h3{font-size:16px;color:var(--gold)}
+.hero{padding-block:30px 8px}
+.hero h1{font-size:clamp(28px,5vw,44px)}
+@media (max-width:700px){
+  .top{padding:10px 16px}
+  .logo{width:112px}
+  .hero{padding-block:14px 4px;gap:4px}
+  .hero .eyebrow,.hero p{display:none}
+  .hero h1{font-size:22px}
+  .grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:14px;padding-bottom:24px}
+  .ccard{border-radius:10px}
+  .ccard .cover{aspect-ratio:4/3}
+  .ccard .body{padding:6px 6px 8px}
+  .ccard h3{font-size:12px;line-height:1.25;overflow-wrap:anywhere}
+  .chead{padding-block:2px 12px}
+  .gal{padding-bottom:32px}
+  .lb{padding-inline:0}
+  .lb .stage img{border-radius:0}
+  .lb .nv{width:48px;height:48px;background:rgba(6,11,20,.55)}
+  .gal{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+}
+</style>
+<link rel="icon" href="assets/logo.png">
+</head><body>
+<header class="top"><div class="wrap"><button class="logo" id="home-logo" aria-label="JOMO Home Interiors, back to all projects"></button></div></header>
+<div class="wrap">
+  <main id="app"></main>
+</div>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <div class="bar"><span id="lb-count"></span><button class="x" id="lb-close" aria-label="Close">✕</button></div>
+  <div class="stage" id="lb-stage"></div>
+  <div class="cap2" id="lb-cap"></div>
+</div>
+
+<script>
+const CLIENTS = [{"id":"mohan","name":"Mohan","cover":"183a0155","images":[{"n":"183a0155","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"183a0156","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"183a0158","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"183a0160","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"183a0163","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"183a0164","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"183a0165","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"183a0166","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"183a0171","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"183a0177","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"183a0182","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"183a0184","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"183a0185","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"183a0188","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"183a0195","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"183a0196","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"183a0201","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"183a0202","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"183a0207","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"183a0209","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"183a0210","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"183a0221","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"183a0230","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"183a0233","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"183a0235","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"183a0238","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"183a0240","tw":600,"th":400,"fw":1800,"fh":1200}]},{"id":"poornima","name":"Poornima","cover":"1","images":[{"n":"1","tw":600,"th":450,"fw":1448,"fh":1086},{"n":"2","tw":600,"th":399,"fw":1537,"fh":1023},{"n":"3","tw":600,"th":399,"fw":1537,"fh":1023},{"n":"4","tw":600,"th":400,"fw":1536,"fh":1024},{"n":"5","tw":600,"th":400,"fw":1536,"fh":1024},{"n":"6","tw":600,"th":404,"fw":1528,"fh":1029},{"n":"7","tw":600,"th":405,"fw":1527,"fh":1030}]},{"id":"preethi-illam","name":"Preethi Illam","cover":"1","images":[{"n":"1","tw":600,"th":399,"fw":1800,"fh":1198},{"n":"2","tw":600,"th":399,"fw":1800,"fh":1198},{"n":"3","tw":600,"th":902,"fw":1800,"fh":2705},{"n":"4","tw":600,"th":399,"fw":1800,"fh":1197},{"n":"5","tw":600,"th":902,"fw":1800,"fh":2705},{"n":"6","tw":600,"th":902,"fw":1800,"fh":2705},{"n":"7","tw":600,"th":399,"fw":1800,"fh":1198},{"n":"8","tw":600,"th":902,"fw":1800,"fh":2706},{"n":"9","tw":600,"th":399,"fw":1800,"fh":1198},{"n":"10","tw":600,"th":902,"fw":1800,"fh":2706},{"n":"11","tw":600,"th":399,"fw":1800,"fh":1198},{"n":"12","tw":600,"th":399,"fw":1800,"fh":1198},{"n":"13","tw":600,"th":902,"fw":1800,"fh":2705}]},{"id":"priya-meghanathan","name":"Priya Meghanathan","cover":"1","images":[{"n":"1","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"2","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"3","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"4","tw":600,"th":750,"fw":1800,"fh":2250},{"n":"5","tw":600,"th":750,"fw":1800,"fh":2250},{"n":"6","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"7","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"8","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"9","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"10","tw":600,"th":750,"fw":1800,"fh":2250},{"n":"11","tw":600,"th":750,"fw":1800,"fh":2250},{"n":"12","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"13","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"14","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"15","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"16","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"17","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"18","tw":600,"th":750,"fw":1800,"fh":2250},{"n":"19","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"20","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"21","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"22","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"23","tw":600,"th":750,"fw":1800,"fh":2250}]},{"id":"ramakrishnan","name":"Ramakrishnan","cover":"1","images":[{"n":"1","tw":600,"th":400,"fw":1536,"fh":1024},{"n":"2","tw":600,"th":901,"fw":1023,"fh":1537},{"n":"3","tw":600,"th":400,"fw":1536,"fh":1024},{"n":"4","tw":600,"th":400,"fw":1536,"fh":1024},{"n":"5","tw":600,"th":400,"fw":1536,"fh":1024},{"n":"6","tw":600,"th":399,"fw":1537,"fh":1023},{"n":"7","tw":600,"th":900,"fw":1024,"fh":1536},{"n":"8","tw":600,"th":900,"fw":1024,"fh":1536},{"n":"9","tw":600,"th":900,"fw":1024,"fh":1536},{"n":"10","tw":600,"th":900,"fw":1024,"fh":1536},{"n":"11","tw":600,"th":900,"fw":1024,"fh":1536}]},{"id":"suraj","name":"Suraj","cover":"jomo-editedphotos-hires-2","images":[{"n":"jomo-editedphotos-hires-2","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-3","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-4","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-5","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-6","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-7","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-8","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-9","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-10","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-11","tw":600,"th":549,"fw":1800,"fh":1646},{"n":"jomo-editedphotos-hires-12","tw":600,"th":425,"fw":1800,"fh":1276},{"n":"jomo-editedphotos-hires-13","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-14","tw":600,"th":750,"fw":1800,"fh":2250},{"n":"jomo-editedphotos-hires-15","tw":600,"th":750,"fw":1800,"fh":2250},{"n":"jomo-editedphotos-hires-16","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-17","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-18","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-19","tw":600,"th":750,"fw":1800,"fh":2250},{"n":"jomo-editedphotos-hires-20","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-21","tw":600,"th":750,"fw":1800,"fh":2250},{"n":"jomo-editedphotos-hires-22","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-23","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-24","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-25","tw":600,"th":750,"fw":1800,"fh":2250},{"n":"jomo-editedphotos-hires-26","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-27","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-28","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-29","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-30","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-31","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-32","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-33","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-34","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-35","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-36","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-37","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-38","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-39","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-40","tw":600,"th":527,"fw":1800,"fh":1580},{"n":"jomo-editedphotos-hires-41","tw":600,"th":600,"fw":1800,"fh":1800},{"n":"jomo-editedphotos-hires-42","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-43","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-44","tw":600,"th":750,"fw":1800,"fh":2250},{"n":"jomo-editedphotos-hires-45","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-46","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-47","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-48","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-49","tw":600,"th":750,"fw":1800,"fh":2250},{"n":"jomo-editedphotos-hires-50","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-51","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-52","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-53","tw":600,"th":750,"fw":1800,"fh":2250},{"n":"jomo-editedphotos-hires-54","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-55","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-56","tw":600,"th":750,"fw":1800,"fh":2250},{"n":"jomo-editedphotos-hires-57","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-58","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-59","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-60","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-61","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-62","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-63","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-64","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-65","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-66","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-67","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-68","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-69","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-70","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-71","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-72","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-73","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-74","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-75","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-76","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-77","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-78","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-79","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-80","tw":600,"th":750,"fw":1800,"fh":2250},{"n":"jomo-editedphotos-hires-81","tw":600,"th":750,"fw":1800,"fh":2250},{"n":"jomo-editedphotos-hires-82","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-83","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-84","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-85","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-86","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-87","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-88","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-89","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-90","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-91","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-92","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-93","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-94","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-95","tw":600,"th":430,"fw":1800,"fh":1291},{"n":"jomo-editedphotos-hires-96","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-97","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-98","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-99","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-100","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-101","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-102","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-103","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-104","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-105","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-106","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-107","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-108","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-109","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-110","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-111","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-112","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-113","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-114","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-115","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-116","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-117","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-118","tw":600,"th":400,"fw":1800,"fh":1200},{"n":"jomo-editedphotos-hires-119","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-120","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-121","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-122","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-123","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-124","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-125","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-126","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-127","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-128","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-129","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-130","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-131","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-132","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-133","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-134","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-135","tw":600,"th":900,"fw":1800,"fh":2700},{"n":"jomo-editedphotos-hires-136","tw":600,"th":750,"fw":1800,"fh":2250},{"n":"jomo-editedphotos-hires-137","tw":600,"th":750,"fw":1800,"fh":2250},{"n":"jomo-editedphotos-hires-138","tw":600,"th":750,"fw":1800,"fh":2250},{"n":"jomo-editedphotos-hires","tw":600,"th":400,"fw":1800,"fh":1200}]},{"id":"yogeshwari","name":"Yogeshwari","cover":"1","images":[{"n":"1","tw":600,"th":400,"fw":1536,"fh":1024},{"n":"2","tw":600,"th":400,"fw":1536,"fh":1024},{"n":"3","tw":600,"th":400,"fw":1536,"fh":1024},{"n":"4","tw":600,"th":399,"fw":1537,"fh":1023},{"n":"5","tw":600,"th":400,"fw":1536,"fh":1024},{"n":"6","tw":600,"th":400,"fw":1536,"fh":1024},{"n":"7","tw":600,"th":900,"fw":1024,"fh":1536},{"n":"8","tw":600,"th":400,"fw":1536,"fh":1024},{"n":"9","tw":600,"th":400,"fw":1535,"fh":1024},{"n":"10","tw":600,"th":414,"fw":1509,"fh":1042}]}];
+/* each client: {id,name,cover,images:[{n,tw,th,fw,fh}]}  ->  assets/<id>/thumb/<n>.webp and assets/<id>/full/<n>.webp */
+const A = 'assets/';
+const thumb = (c,i) => `${A}${c.id}/thumb/${i.n}.webp`;
+const full  = (c,i) => `${A}${c.id}/full/${i.n}.webp`;
+const app = document.getElementById('app');
+const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const FIRST_SCREEN = 12;
+
+function home(){
+  app.innerHTML = `
+  <section class="hero">
+    <span class="eyebrow">Our projects</span>
+    <h1>Crafting homes where you <em>belong.</em></h1>
+    <p>Explore our completed projects.</p>
+  </section>
+  <div class="grid">${CLIENTS.map((c,k)=>{
+    const i=c.images[0], eager=k<FIRST_SCREEN;
+    return `<button class="ccard" data-id="${c.id}">
+      <img class="cover" alt="${esc(c.name)}" src="${thumb(c,i)}" width="${i.tw}" height="${i.th}" ${eager?'fetchpriority="high"':'loading="lazy"'} decoding="async">
+      <span class="body"><h3>${esc(c.name)}</h3></span>
+    </button>`}).join('')}</div>`;
+  app.querySelectorAll('.ccard').forEach(b=>b.onclick=()=>{location.hash=b.dataset.id});
+}
+
+function client(c){
+  app.innerHTML = `
+  <button class="back" id="back">← All projects</button>
+  <section class="chead"><h1>${esc(c.name)}</h1></section>
+  <div class="gal">${c.images.map((it,i)=>`<button data-i="${i}" aria-label="Open photo ${i+1}"><img alt="${esc(c.name)} ${i+1}" src="${thumb(c,it)}" width="${it.tw}" height="${it.th}" ${i<8?'':'loading="lazy" '}decoding="async"></button>`).join('')}</div>`;
+  document.getElementById('back').onclick=()=>{location.hash=''};
+  app.querySelectorAll('.gal button').forEach(b=>b.onclick=()=>openLB(c,+b.dataset.i));
+}
+
+/* ───────── LIGHTBOX ───────── */
+const lb=document.getElementById('lb'), stage=document.getElementById('lb-stage');
+let cur=null;
+function openLB(c,i){ cur={c,i}; renderLB(); lb.hidden=false; document.body.style.overflow='hidden'; document.getElementById('lb-close').focus(); }
+function renderLB(){
+  const {c,i}=cur, items=c.images, it=items[i];
+  document.getElementById('lb-count').textContent=`${i+1} / ${items.length}`;
+  document.getElementById('lb-cap').textContent=c.name;
+  const nav=items.length>1?`<button class="nv prev" aria-label="Previous">‹</button><button class="nv next" aria-label="Next">›</button>`:'';
+  stage.innerHTML=`<img alt="${esc(c.name)} ${i+1}" src="${full(c,it)}" width="${it.fw}" height="${it.fh}" decoding="async">${nav}`;
+  const p=stage.querySelector('.prev'), n=stage.querySelector('.next');
+  if(p) p.onclick=()=>step(-1); if(n) n.onclick=()=>step(1);
+  if(items.length>1) new Image().src=full(c,items[(i+1)%items.length]);   // preload next
+}
+function step(d){ cur.i=(cur.i+d+cur.c.images.length)%cur.c.images.length; renderLB(); }
+function closeLB(){ lb.hidden=true; document.body.style.overflow=''; cur=null; }
+document.getElementById('lb-close').onclick=closeLB;
+lb.addEventListener('click',e=>{ if(e.target===lb||e.target===stage) closeLB(); });
+document.addEventListener('keydown',e=>{ if(lb.hidden) return; if(e.key==='Escape') closeLB(); if(e.key==='ArrowLeft') step(-1); if(e.key==='ArrowRight') step(1); });
+
+let tx=null;
+stage.addEventListener('touchstart',e=>{tx=e.touches.length===1?e.touches[0].clientX:null},{passive:true});
+stage.addEventListener('touchend',e=>{ if(tx===null||!cur) return; const dx=e.changedTouches[0].clientX-tx; tx=null; if(Math.abs(dx)>50) step(dx<0?1:-1); },{passive:true});
+
+/* ───────── ROUTER ───────── */
+function route(){
+  if(cur) closeLB();
+  const c=CLIENTS.find(x=>x.id===decodeURIComponent(location.hash.replace(/^#/,'')));
+  if(c){ client(c); window.scrollTo(0,0); } else home();
+}
+document.getElementById('home-logo').onclick=()=>{ location.hash=''; route(); window.scrollTo(0,0); };
+window.addEventListener('hashchange',route);
+route();
+</script>
+</body></html>
