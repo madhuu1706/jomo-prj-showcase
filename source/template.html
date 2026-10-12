@@ -32,6 +32,12 @@ h1,h2,h3{text-wrap:balance;margin:0;line-height:1.15}
 .ccard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;text-align:left;padding:0;display:flex;flex-direction:column;box-shadow:var(--shadow);transition:transform .2s,border-color .2s}
 .ccard:hover,.ccard:focus-visible{transform:translateY(-3px);border-color:var(--gold-line);outline:none}
 .ccard .cover{aspect-ratio:4/3;width:100%;display:block;object-fit:cover}
+.cwrap{position:relative;display:block}
+.badge{position:absolute;left:6px;top:6px;background:#fff;border-radius:6px;padding:3px 6px;display:flex;line-height:0;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.badge img{height:24px;width:auto;display:block}
+.chead{display:flex;align-items:center;flex-wrap:wrap;gap:6px 14px}
+.chead .badge{position:static;border-radius:8px;padding:5px 9px}
+.chead .badge img{height:34px}
 .ccard .body{padding:14px 16px 16px;display:grid;gap:4px}
 .ccard h3{font-size:19px}
 
@@ -77,6 +83,9 @@ h1,h2,h3{text-wrap:balance;margin:0;line-height:1.15}
   .grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:14px;padding-bottom:24px}
   .ccard{border-radius:10px}
   .ccard .cover{aspect-ratio:4/3}
+  .badge{left:4px;top:4px;padding:2px 4px;border-radius:5px}
+  .badge img{height:20px}
+  .chead .badge img{height:28px}
   .ccard .body{padding:6px 6px 8px}
   .ccard h3{font-size:12px;line-height:1.25;overflow-wrap:anywhere}
   .chead{padding-block:2px 12px}
@@ -105,6 +114,8 @@ const CLIENTS = @@MANIFEST@@;
 /* each client: {id,name,cover,images:[{n,tw,th,fw,fh}]}  ->  assets/<id>/thumb/<n>.webp and assets/<id>/full/<n>.webp */
 const A = 'assets/';
 const thumb = (c,i) => `${A}${c.id}/thumb/${i.n}.webp`;
+const bimg  = b => `${A}builders/${b.f}.svg`;
+const badge = (b,cls) => b ? `<span class="badge"><img src="${bimg(b)}" alt="${esc(b.f)} builder logo" width="${b.w}" height="${b.h}" decoding="async"></span>` : '';
 const full  = (c,i) => `${A}${c.id}/full/${i.n}.webp`;
 const app = document.getElementById('app');
 const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -120,8 +131,8 @@ function home(){
   <div class="grid">${CLIENTS.map((c,k)=>{
     const i=c.images[0], eager=k<FIRST_SCREEN;
     return `<button class="ccard" data-id="${c.id}">
-      <img class="cover" alt="${esc(c.name)}" src="${thumb(c,i)}" width="${i.tw}" height="${i.th}" ${eager?'fetchpriority="high"':'loading="lazy"'} decoding="async">
-      <span class="body"><h3>${esc(c.name)}</h3></span>
+      <span class="cwrap"><img class="cover" alt="${esc(c.label)}" src="${thumb(c,i)}" width="${i.tw}" height="${i.th}" ${eager?'fetchpriority="high"':'loading="lazy"'} decoding="async">${badge(c.builder)}</span>
+      <span class="body"><h3>${esc(c.label)}</h3></span>
     </button>`}).join('')}</div>`;
   app.querySelectorAll('.ccard').forEach(b=>b.onclick=()=>{location.hash=b.dataset.id});
 }
@@ -129,8 +140,8 @@ function home(){
 function client(c){
   app.innerHTML = `
   <button class="back" id="back">← All projects</button>
-  <section class="chead"><h1>${esc(c.name)}</h1></section>
-  <div class="gal">${c.images.map((it,i)=>`<button data-i="${i}" aria-label="Open photo ${i+1}"><img alt="${esc(c.name)} ${i+1}" src="${thumb(c,it)}" width="${it.tw}" height="${it.th}" ${i<8?'':'loading="lazy" '}decoding="async"></button>`).join('')}</div>`;
+  <section class="chead"><h1>${esc(c.label)}</h1>${badge(c.builder)}</section>
+  <div class="gal">${c.images.map((it,i)=>`<button data-i="${i}" aria-label="Open photo ${i+1}"><img alt="${esc(c.label)} ${i+1}" src="${thumb(c,it)}" width="${it.tw}" height="${it.th}" ${i<8?'':'loading="lazy" '}decoding="async"></button>`).join('')}</div>`;
   document.getElementById('back').onclick=()=>{location.hash=''};
   app.querySelectorAll('.gal button').forEach(b=>b.onclick=()=>openLB(c,+b.dataset.i));
 }
@@ -142,9 +153,9 @@ function openLB(c,i){ cur={c,i}; renderLB(); lb.hidden=false; document.body.styl
 function renderLB(){
   const {c,i}=cur, items=c.images, it=items[i];
   document.getElementById('lb-count').textContent=`${i+1} / ${items.length}`;
-  document.getElementById('lb-cap').textContent=c.name;
+  document.getElementById('lb-cap').textContent=c.label;
   const nav=items.length>1?`<button class="nv prev" aria-label="Previous">‹</button><button class="nv next" aria-label="Next">›</button>`:'';
-  stage.innerHTML=`<img alt="${esc(c.name)} ${i+1}" src="${full(c,it)}" width="${it.fw}" height="${it.fh}" decoding="async">${nav}`;
+  stage.innerHTML=`<img alt="${esc(c.label)} ${i+1}" src="${full(c,it)}" width="${it.fw}" height="${it.fh}" decoding="async">${nav}`;
   const p=stage.querySelector('.prev'), n=stage.querySelector('.next');
   if(p) p.onclick=()=>step(-1); if(n) n.onclick=()=>step(1);
   if(items.length>1) new Image().src=full(c,items[(i+1)%items.length]);   // preload next

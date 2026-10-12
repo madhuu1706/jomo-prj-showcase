@@ -14,6 +14,15 @@ EXT = {'.jpg', '.jpeg', '.png', '.heic'}
 # Photos saved sideways without EXIF info: degrees counter-clockwise to turn them upright.
 ROTATE = {('Mohan', f): 90 for f in ('183A0156.JPG','183A0158.JPG','183A0160.JPG','183A0210.JPG','183A0221.JPG','183A0230.JPG')}
 
+# Display title (Mr./Mrs.) and builder per client. Folder name stays the client name; label = title + name.
+# builder -> logos/builders/<id>.svg with its width/height (for layout). None = individual house.
+BUILDERS = {'brigade': (89, 102), 'ayana': (316, 169)}
+META = {
+    'Mohan': ('Mr.', None), 'Suraj': ('Mr.', None), 'Preethi Illam': ('', None),
+    'Poornima': ('Mrs.', 'brigade'), 'Yogeshwari': ('Mrs.', 'brigade'), 'Ramakrishnan': ('Mr.', 'brigade'),
+    'Priya Meghanathan': ('Mrs.', 'ayana'),
+}
+
 def nat(s): return [int(t) if t.isdigit() else t.lower() for t in re.split(r'(\d+)', s)]
 def slug(s): return re.sub(r'-+', '-', re.sub(r'[^a-z0-9]+', '-', s.lower())).strip('-')
 
@@ -61,7 +70,12 @@ for client in sorted(os.listdir(SRC), key=nat):
         tw, th = save(im, f'{OUT}/{cs}/thumb/{name}.webp', 600, 75, 60)
         fw, fh = save(im, f'{OUT}/{cs}/full/{name}.webp', 1800, 80)
         imgs.append({'n': name, 'tw': tw, 'th': th, 'fw': fw, 'fh': fh})
-    manifest.append({'id': cs, 'name': client, 'cover': imgs[0]['n'], 'images': imgs})
+    title, b = META.get(client, ('', None))
+    manifest.append({'id': cs, 'name': client, 'label': (title + ' ' + client).strip(), 'cover': imgs[0]['n'],
+                     'builder': {'f': b, 'w': BUILDERS[b][0], 'h': BUILDERS[b][1]} if b else None, 'images': imgs})
     print(client, len(imgs), flush=True)
+import shutil
+os.makedirs(f'{OUT}/builders', exist_ok=True)
+for b in BUILDERS: shutil.copy(os.path.join(ROOT, 'logos', 'builders', b + '.svg'), f'{OUT}/builders/{b}.svg')
 with open(f'{OUT}/manifest.json', 'w', encoding='utf-8') as fh:
     json.dump(manifest, fh, ensure_ascii=False, separators=(',', ':'))
