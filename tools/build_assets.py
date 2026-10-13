@@ -20,8 +20,9 @@ BUILDERS = {'brigade': (89, 102), 'ayana': (316, 169)}
 META = {
     'Mohan': ('Mr.', None), 'Suraj': ('Mr.', None), 'Preethi Illam': ('', None),
     'Poornima': ('Mrs.', 'brigade'), 'Yogeshwari': ('Mrs.', 'brigade'), 'Ramakrishnan': ('Mr.', 'brigade'),
-    'Priya Meghanathan': ('Mrs.', 'ayana'),
+    'Priya Meghanathan': ('Mrs.', 'ayana'), 'Sunil': ('Mr.', None),
 }
+DISPLAY = {'Poornima': 'KrishnaPriya'}   # shown name when it differs from the folder name
 
 def nat(s): return [int(t) if t.isdigit() else t.lower() for t in re.split(r'(\d+)', s)]
 def slug(s): return re.sub(r'-+', '-', re.sub(r'[^a-z0-9]+', '-', s.lower())).strip('-')
@@ -71,7 +72,7 @@ for client in sorted(os.listdir(SRC), key=nat):
         fw, fh = save(im, f'{OUT}/{cs}/full/{name}.webp', 1800, 80)
         imgs.append({'n': name, 'tw': tw, 'th': th, 'fw': fw, 'fh': fh})
     title, b = META.get(client, ('', None))
-    manifest.append({'id': cs, 'name': client, 'label': (title + ' ' + client).strip(), 'cover': imgs[0]['n'],
+    manifest.append({'id': cs, 'name': client, 'label': (title + ' ' + DISPLAY.get(client, client)).strip(), 'cover': imgs[0]['n'],
                      'builder': {'f': b, 'w': BUILDERS[b][0], 'h': BUILDERS[b][1]} if b else None, 'images': imgs})
     print(client, len(imgs), flush=True)
 import shutil
