@@ -23,6 +23,7 @@ META = {
     'Priya Meghanathan': ('Mrs.', 'ayana'), 'Sunil': ('Mr.', None),
     'Mrs.Asha Narayan': ('Mrs.', 'florence'),
 }
+COVER = {'Mrs.Asha Narayan': 'L1.png'}   # tile cover when it should not be the first photo (gallery order is unchanged)
 DISPLAY = {'Poornima': 'KrishnaPriya', 'Mrs.Asha Narayan': 'Asha Narayan'}   # shown name when it differs from the folder name
 
 def nat(s): return [int(t) if t.isdigit() else t.lower() for t in re.split(r'(\d+)', s)]
@@ -73,7 +74,7 @@ for client in sorted(os.listdir(SRC), key=nat):
         fw, fh = save(im, f'{OUT}/{cs}/full/{name}.webp', 1800, 80)
         imgs.append({'n': name, 'tw': tw, 'th': th, 'fw': fw, 'fh': fh})
     title, b = META.get(client, ('', None))
-    manifest.append({'id': cs, 'name': client, 'label': (title + ' ' + DISPLAY.get(client, client)).strip(), 'cover': imgs[0]['n'],
+    manifest.append({'id': cs, 'name': client, 'label': (title + ' ' + DISPLAY.get(client, client)).strip(), 'cover': (slug(os.path.splitext(COVER[client])[0]) if client in COVER else imgs[0]['n']),
                      'builder': {'f': b, 'w': BUILDERS[b][0], 'h': BUILDERS[b][1], 'e': BUILDERS[b][2]} if b else None, 'images': imgs})
     print(client, len(imgs), flush=True)
 import shutil

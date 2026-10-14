@@ -129,7 +129,7 @@ function home(){
     <p>Explore our completed projects.</p>
   </section>
   <div class="grid">${CLIENTS.map((c,k)=>{
-    const i=c.images[0], eager=k<FIRST_SCREEN;
+    const i=c.images.find(x=>x.n===c.cover)||c.images[0], eager=k<FIRST_SCREEN;
     return `<button class="ccard" data-id="${c.id}">
       <span class="cwrap"><img class="cover" alt="${esc(c.label)}" src="${thumb(c,i)}" width="${i.tw}" height="${i.th}" ${eager?'fetchpriority="high"':'loading="lazy"'} decoding="async">${badge(c.builder)}</span>
       <span class="body"><h3>${esc(c.label)}</h3></span>
