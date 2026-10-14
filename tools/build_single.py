@@ -9,8 +9,8 @@ for c in json.load(open(f'{A}/manifest.json', encoding='utf-8')):
     for i in c['images']:
         for k in ('thumb', 'full'):
             parts.append(f'"{c["id"]}/{k}/{i["n"]}":"data:image/webp;base64,{b64(f"{A}/{c["id"]}/{k}/{i["n"]}.webp")}"')
-for b in ('brigade', 'ayana'):
-    parts.append(f'"builders/{b}":"data:image/svg+xml;base64,{b64(f"{A}/builders/{b}.svg")}"')
+for b, e, mt in (('brigade', 'svg', 'svg+xml'), ('ayana', 'svg', 'svg+xml'), ('florence', 'png', 'png')):
+    parts.append(f'"builders/{b}":"data:image/{mt};base64,{b64(f"{A}/builders/{b}.{e}")}"')
 h = h.replace("const bimg  = b => `${A}builders/${b.f}.svg`;", "const bimg  = b => IMG[`builders/${b.f}`];")
 old_t = "const thumb = (c,i) => `${A}${c.id}/thumb/${i.n}.webp`;"
 old_f = "const full  = (c,i) => `${A}${c.id}/full/${i.n}.webp`;"

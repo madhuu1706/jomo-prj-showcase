@@ -114,7 +114,7 @@ const CLIENTS = @@MANIFEST@@;
 /* each client: {id,name,cover,images:[{n,tw,th,fw,fh}]}  ->  assets/<id>/thumb/<n>.webp and assets/<id>/full/<n>.webp */
 const A = 'assets/';
 const thumb = (c,i) => `${A}${c.id}/thumb/${i.n}.webp`;
-const bimg  = b => `${A}builders/${b.f}.svg`;
+const bimg  = b => `${A}builders/${b.f}.${b.e}`;
 const badge = (b,cls) => b ? `<span class="badge"><img src="${bimg(b)}" alt="${esc(b.f)} builder logo" width="${b.w}" height="${b.h}" decoding="async"></span>` : '';
 const full  = (c,i) => `${A}${c.id}/full/${i.n}.webp`;
 const app = document.getElementById('app');
