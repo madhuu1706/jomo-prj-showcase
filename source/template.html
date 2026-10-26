@@ -22,6 +22,7 @@ h1,h2,h3{text-wrap:balance;margin:0;line-height:1.15}
 
 /* top bar */
 .top{background:var(--bg);margin-inline:-16px;padding:14px 16px;border-bottom:1px solid var(--gold-line)}
+.top .wrap{display:flex;justify-content:center}
 .logo{display:block;width:190px;aspect-ratio:560/214;background:var(--logo) center/contain no-repeat;border:0;padding:0;cursor:pointer}
 
 /* home */
@@ -32,6 +33,7 @@ h1,h2,h3{text-wrap:balance;margin:0;line-height:1.15}
 .ccard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;text-align:left;padding:0;display:flex;flex-direction:column;box-shadow:var(--shadow);transition:transform .2s,border-color .2s}
 .ccard:hover,.ccard:focus-visible{transform:translateY(-3px);border-color:var(--gold-line);outline:none}
 .ccard .cover{aspect-ratio:4/3;width:100%;display:block;object-fit:cover}
+.ccard .cover.ph{display:flex;align-items:center;justify-content:center;background:var(--card-2);color:var(--fg-faint);font-size:13px;text-align:center;padding:10px}
 .cwrap{position:relative;display:block}
 .badge{position:absolute;left:6px;top:6px;background:#fff;border-radius:6px;padding:3px 6px;display:flex;line-height:0;box-shadow:0 2px 8px rgba(0,0,0,.3)}
 .badge img{height:24px;width:auto;display:block}
@@ -40,6 +42,10 @@ h1,h2,h3{text-wrap:balance;margin:0;line-height:1.15}
 .chead .badge img{height:34px}
 .ccard .body{padding:14px 16px 16px;display:grid;gap:4px}
 .ccard h3{font-size:19px}
+.ccard .cmain{display:block;width:100%;padding:0;border:0;background:none;text-align:left}
+.ctabs{display:flex;gap:6px;padding:0 10px 12px}
+.ctab{flex:1;background:var(--bg-2);border:1px solid var(--line);border-radius:8px;padding:6px 8px;font-size:12px;font-weight:600;color:var(--fg-soft);text-align:center}
+.ctab:hover{border-color:var(--gold-line);color:var(--gold)}
 
 /* client page */
 .back{background:none;border:0;padding:8px 0;color:var(--fg-soft);font-size:14px;display:inline-flex;gap:6px}
@@ -50,6 +56,24 @@ h1,h2,h3{text-wrap:balance;margin:0;line-height:1.15}
 .gal button{padding:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card);aspect-ratio:4/3}
 .gal img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s}
 .gal button:hover img{transform:scale(1.03)}
+
+/* media tabs */
+.segs{display:flex;gap:8px;padding-bottom:18px;flex-wrap:wrap}
+.seg{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:9px 18px;font-size:14px;font-weight:600;color:var(--fg-soft)}
+.seg.is-on{background:var(--gold);border-color:var(--gold);color:var(--on-gold)}
+.seg:hover{border-color:var(--gold-line)}
+.vidgal{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;padding-bottom:48px;align-items:start}
+.vcard{position:relative;width:100%;padding:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}
+.vcard[data-ar="portrait"]{aspect-ratio:9/16}
+.vcard[data-ar="landscape"]{aspect-ratio:16/9}
+.vcard img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s}
+.vcard:hover img{transform:scale(1.03)}
+.vcard iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vplay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.vplay span{width:56px;height:56px;border-radius:999px;background:rgba(21,34,56,.78);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:20px;transition:background .2s,color .2s}
+.vcard:hover .vplay span{background:var(--gold);color:var(--on-gold)}
+.gal[hidden],.vidgal[hidden]{display:none}
+.vempty{color:var(--fg-faint);padding-bottom:48px}
 
 /* lightbox */
 .lb{position:fixed;inset:0;height:100dvh;touch-action:pan-y pinch-zoom;overscroll-behavior:contain;z-index:50;background:rgba(6,11,20,.94);display:grid;grid-template-rows:auto 1fr auto;padding:env(safe-area-inset-top,0px) 12px env(safe-area-inset-bottom,0px)}
@@ -88,6 +112,8 @@ h1,h2,h3{text-wrap:balance;margin:0;line-height:1.15}
   .chead .badge img{height:28px}
   .ccard .body{padding:6px 6px 8px}
   .ccard h3{font-size:12px;line-height:1.25;overflow-wrap:anywhere}
+  .ctabs{padding:0 5px 6px;gap:4px}
+  .ctab{padding:3px 4px;font-size:10px;border-radius:6px}
   .chead{padding-block:2px 12px}
   .gal{padding-bottom:32px}
   .lb{padding-inline:0}
@@ -129,21 +155,55 @@ function home(){
     <p>Explore our completed projects.</p>
   </section>
   <div class="grid">${CLIENTS.map((c,k)=>{
-    const i=c.images.find(x=>x.n===c.cover)||c.images[0], eager=k<FIRST_SCREEN;
-    return `<button class="ccard" data-id="${c.id}">
-      <span class="cwrap"><img class="cover" alt="${esc(c.label)}" src="${thumb(c,i)}" width="${i.tw}" height="${i.th}" ${eager?'fetchpriority="high"':'loading="lazy"'} decoding="async">${badge(c.builder)}</span>
-      <span class="body"><h3>${esc(c.label)}</h3></span>
-    </button>`}).join('')}</div>`;
-  app.querySelectorAll('.ccard').forEach(b=>b.onclick=()=>{location.hash=b.dataset.id});
+    const hasImg=c.images && c.images.length>0;
+    const i=hasImg?(c.images.find(x=>x.n===c.cover)||c.images[0]):null, eager=k<FIRST_SCREEN;
+    const hasVid=(c.videos||[]).length>0;
+    const cover=hasImg?`<img class="cover" alt="${esc(c.label)}" src="${thumb(c,i)}" width="${i.tw}" height="${i.th}" ${eager?'fetchpriority="high"':'loading="lazy"'} decoding="async">`:`<span class="cover ph">Photos coming soon</span>`;
+    return `<div class="ccard">
+      <button class="cmain" data-id="${c.id}">
+        <span class="cwrap">${cover}${badge(c.builder)}</span>
+        <span class="body"><h3>${esc(c.label)}</h3></span>
+      </button>
+      <div class="ctabs">
+        <button class="ctab" data-id="${c.id}" data-mode="images">Images</button>
+        ${hasVid?`<button class="ctab" data-id="${c.id}" data-mode="videos">Videos</button>`:''}
+      </div>
+    </div>`}).join('')}</div>`;
+  app.querySelectorAll('.cmain').forEach(b=>b.onclick=()=>{location.hash=b.dataset.id});
+  app.querySelectorAll('.ctab').forEach(b=>b.onclick=()=>{location.hash=`${b.dataset.id}/${b.dataset.mode}`});
 }
 
-function client(c){
+const vimeoId = v => /^\d+$/.test(v) ? v : (String(v).match(/(\d+)(?:\D*$)/) || [])[1] || '';
+const vthumb = (c,name) => `${A}${c.id}/thumb/${name}.webp`;
+
+function client(c, mode){
+  const videos = c.videos || [];
+  if(mode==='videos' && !videos.length) mode='images';
+  const showImages = mode!=='videos';
+  const showVideos = mode==='videos' || (!mode && videos.length);
+  const showTabs = !mode && videos.length>0;
+  const tabs = showTabs ? `<div class="segs"><button class="seg is-on" data-tab="images">Images</button><button class="seg" data-tab="videos">Videos</button></div>` : '';
+  const imgPane = showImages ? (c.images.length ? `<div class="gal" id="pane-images">${c.images.map((it,i)=>`<button data-i="${i}" aria-label="Open photo ${i+1}"><img alt="${esc(c.label)} ${i+1}" src="${thumb(c,it)}" width="${it.tw}" height="${it.th}" ${i<8?'':'loading="lazy" '}decoding="async"></button>`).join('')}</div>` : `<div id="pane-images"><p class="vempty">Photos coming soon.</p></div>`) : '';
+  const vidPane = showVideos ? `<div class="vidgal" id="pane-videos"${showTabs?' hidden':''}>${videos.map(v=>`<div class="vcard" data-ar="${v.ar}" data-v="${esc(vimeoId(v.v))}">${v.img?`<img src="${vthumb(c,v.img)}" alt="${esc(c.label)} video" loading="lazy" decoding="async">`:''}<span class="vplay"><span>▶</span></span></div>`).join('')}</div>` : '';
   app.innerHTML = `
   <button class="back" id="back">← All projects</button>
   <section class="chead"><h1>${esc(c.label)}</h1>${badge(c.builder)}</section>
-  <div class="gal">${c.images.map((it,i)=>`<button data-i="${i}" aria-label="Open photo ${i+1}"><img alt="${esc(c.label)} ${i+1}" src="${thumb(c,it)}" width="${it.tw}" height="${it.th}" ${i<8?'':'loading="lazy" '}decoding="async"></button>`).join('')}</div>`;
+  ${tabs}
+  ${imgPane}
+  ${vidPane}`;
   document.getElementById('back').onclick=()=>{location.hash=''};
   app.querySelectorAll('.gal button').forEach(b=>b.onclick=()=>openLB(c,+b.dataset.i));
+  app.querySelectorAll('.vcard').forEach(card=>card.onclick=()=>{
+    const id=card.dataset.v;
+    card.innerHTML=`<iframe src="https://player.vimeo.com/video/${id}?title=0&byline=0&portrait=0&autoplay=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+  });
+  if(showTabs){
+    const panes={images:document.getElementById('pane-images'),videos:document.getElementById('pane-videos')};
+    app.querySelectorAll('.seg').forEach(b=>b.onclick=()=>{
+      app.querySelectorAll('.seg').forEach(x=>x.classList.toggle('is-on',x===b));
+      Object.entries(panes).forEach(([k,el])=>el.hidden = k!==b.dataset.tab);
+    });
+  }
 }
 
 /* ───────── LIGHTBOX ───────── */
@@ -173,8 +233,9 @@ stage.addEventListener('touchend',e=>{ if(tx===null||!cur) return; const dx=e.ch
 /* ───────── ROUTER ───────── */
 function route(){
   if(cur) closeLB();
-  const c=CLIENTS.find(x=>x.id===decodeURIComponent(location.hash.replace(/^#/,'')));
-  if(c){ client(c); window.scrollTo(0,0); } else home();
+  const [rawId,mode]=location.hash.replace(/^#/,'').split('/');
+  const c=CLIENTS.find(x=>x.id===decodeURIComponent(rawId));
+  if(c){ client(c,mode); window.scrollTo(0,0); } else home();
 }
 document.getElementById('home-logo').onclick=()=>{ location.hash=''; route(); window.scrollTo(0,0); };
 window.addEventListener('hashchange',route);
