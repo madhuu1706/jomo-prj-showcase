@@ -1,4 +1,5 @@
 {
+  "framework": null,
   "outputDirectory": "public_html",
   "cleanUrls": true,
   "headers": [
